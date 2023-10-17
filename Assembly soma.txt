@@ -2,6 +2,7 @@
 ;Introdução ao Assembly
 ;Autor: João Gabriel Pereira Cardozo, Feap
 ;Version: João Gabriel Pereira Cardozo, Engenharia de Computação 
+;Codigo Funcional
 
 SYS_EXIT      equ 1
 SYS_READ      equ 3
