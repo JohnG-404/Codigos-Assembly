@@ -18,7 +18,7 @@ _start:
     mov eax, 4
     mov ebx, 1
     mov ecx, msg
-    mov edx, 15
+    mov edx, 17
     int 0x80
 
     ; Lê o nome do usuário
@@ -32,7 +32,7 @@ _start:
     mov eax, 4
     mov ebx, 1
     mov ecx, saudacoes
-    mov edx, 10
+    mov edx, 13
     int 0x80
 
     mov eax, 4
