@@ -1,0 +1,82 @@
+;Projeto: Assembly 2º bimestre - Programa de comparação de dois números informados, em assembly
+;Data: 27-Nov-2023
+;Materia: Inteligencia Artificial/ Assembly
+;Author: Luiz Angelo, FEAP Computação 
+;Versão: Joao Gabriel Pereira Cardozo e Pedro Lucas Campos
+
+SYS_EXIT      equ 1
+SYS_READ      equ 3
+SYS_WRITE     equ 4
+STDIN         equ 0
+STDOUT        equ 1
+
+section .data
+    primeira_mensagem db "Digite o 1º número: ", 0
+    segunda_mensagem db "Digite o 2º número: ", 0
+    maior_mensagem db "O maior número é: ", 0
+
+section .bss
+    primeiro_numero resb 4
+    segundo_numero resb 4
+
+section .text
+    global _start
+
+_start:
+    ; Exibir a primeira mensagem
+    mov eax, SYS_WRITE
+    mov ebx, STDOUT
+    mov ecx, primeira_mensagem
+    mov edx, 22 ; Tamanho da primeira mensagem
+    int 0x80
+
+    ; Ler o primeiro número
+    mov eax, SYS_READ
+    mov ebx, STDIN
+    mov ecx, primeiro_numero
+    mov edx, SYS_WRITE
+    int 0x80
+
+    ; Exibir a segunda mensagem
+    mov eax, SYS_WRITE
+    mov ebx, STDOUT
+    mov ecx, segunda_mensagem
+    mov edx, 22 ; Tamanho da segunda mensagem
+    int 0x80
+
+    ; Ler o segundo número
+    mov eax, SYS_READ
+    mov ebx, STDIN
+    mov ecx, segundo_numero
+    mov edx, SYS_WRITE
+    int 0x80
+
+    ; Comparar os números e exibir o maior
+    mov eax, dword [primeiro_numero]  ; Carregar o primeiro número
+    mov ebx, dword [segundo_numero]   ; Carregar o segundo número
+    cmp eax, ebx
+    jle vr_trocar ; Se o primeiro número for menor ou igual, não trocar
+
+    ; Trocar os números se o segundo for maior
+    mov ecx, dword [segundo_numero]
+    mov dword [segundo_numero], eax
+    mov dword [primeiro_numero], ecx
+
+vr_trocar:
+    ; Exibir o maior número
+    mov eax, SYS_WRITE
+    mov ebx, STDOUT
+    mov ecx, maior_mensagem
+    mov edx, 20 ; Tamanho da mensagem do maior número
+    int 0x80
+
+    mov eax, SYS_WRITE
+    mov ebx, STDOUT
+    mov ecx, segundo_numero  ; Exibir o número que agora está armazenado no segundo_numero
+    mov edx, SYS_WRITE
+    int 0x80
+
+    ; Saída do programa
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
